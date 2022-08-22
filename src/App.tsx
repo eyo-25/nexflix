@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Header } from './Components/Header';
 import { Home } from './Routes/Home';
-import { Search } from './Routes/Search';
+import Search from './Routes/Search';
 import { Tv } from './Routes/Tv';
 
 function App() {
@@ -10,14 +10,15 @@ function App() {
       <Header></Header>
       <Routes>
           <Route path="/" element={<Home/>}>
-            <Route path="/movies/:movieId" element={<Home/>}/>
+              <Route path="/movies/:types/:movieId" element={<Home/>}/>
           </Route>
-      </Routes>
-      <Routes>
-          <Route path="/tv" element={<Tv/>}/>
-      </Routes>
-      <Routes>
-          <Route path="/Search" element={<Search/>}/>
+          <Route path="/tvs" element={<Tv/>}>
+              <Route path="/tvs/:types/:tvId" element={<Tv/>}/>
+          </Route>
+          <Route path="/Search" element={<Search/>}>
+            <Route path="/Search/:types/:tvId" element={<Search/>}/>
+            <Route path="/Search/:types/:tvId" element={<Search/>}/>
+          </Route>
       </Routes>
     </BrowserRouter>
   );

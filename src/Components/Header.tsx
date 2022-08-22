@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import { motion, useAnimation, useScroll } from "framer-motion";
-import { useMatch } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -102,14 +103,19 @@ const Input = styled(motion.input)`
   border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
+interface IForm {
+  keyword: string;
+}
+
 export function Header() {
-    const tvMatch = useMatch("/tv")
+    const tvMatch = useMatch("/tvs")
     const homeMatch = useMatch("/")
     const inputAnimation = useAnimation();
     const [searchOpen, setSearchOpen] = useState(false)
     const { scrollY } = useScroll()
     //scrollY 유저가 스크롤한 양  scrollYProgress는 0~1까지의 전체에서 현재페이지의 퍼센트다
     const navAnimation = useAnimation();
+    const navigate = useNavigate()
     const navVariants = {
       up: {
           backgroundColor: "rgba(0,0,0,0)",
@@ -140,6 +146,11 @@ export function Header() {
       }
       setSearchOpen(prev=>!prev)
     }
+    const { register, handleSubmit } = useForm<IForm>()
+    const onValid = (data:IForm) => {
+      console.log(data)
+      navigate(`/search?keyword=${data.keyword}`)
+    }
     return (
         <Nav variants={navVariants} animate={navAnimation}>
             <Col>
@@ -159,13 +170,14 @@ export function Header() {
                         <Link to={'/'}>Home{homeMatch? <Circle layoutId="circle"/>: null}</Link>
                     </Item>
                     <Item>
-                      <Link to={'/tv'}>TvShow{tvMatch? <Circle layoutId="circle"/>: null}</Link>
+                      <Link to={'/tvs'}>TvShow{tvMatch? <Circle layoutId="circle"/>: null}</Link>
                     </Item>
                 </Items>
             </Col>
             <Col>
-              <Search>
+              <Search onSubmit={handleSubmit(onValid)}>
                 <Input
+                  {...register("keyword", {required:true, minLength: 2})}
                   initial={{scaleX:0}}
                   animate={inputAnimation}
                   placeholder="Search for Movie"
