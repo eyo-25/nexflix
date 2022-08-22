@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/nemflix/static/js/main.0428b2aa.js",
+    "index.html": "/nemflix/index.html",
+    "main.0428b2aa.js.map": "/nemflix/static/js/main.0428b2aa.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0428b2aa.js"
+  ]
+}
