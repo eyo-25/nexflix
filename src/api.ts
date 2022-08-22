@@ -85,27 +85,6 @@ export interface IGetMovieDetail {
   title: string;
 }
 
-export interface IGetTvShowDetail {
-  adult: boolean;
-  backdrop_path: string;
-  budget: number;
-  genres: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  runtime: number;
-  title: string;
-}
-
 export async function getMovies(type: Types) {
     return (
       await fetch(
